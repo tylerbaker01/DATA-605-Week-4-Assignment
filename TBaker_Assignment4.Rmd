@@ -1,0 +1,99 @@
+---
+title: "Data 605 Week 4 Assignment"
+author: "Tyler Baker"
+date: "2/19/2022"
+output: html_document
+---
+
+```{r}
+library(tidyverse)
+library(jpeg)
+library(OpenImageR)
+library(magick)
+library(imager)
+```
+
+# Step 1 
+
+for the first step I needed to load the data. Figuring out how to load JPEG data was much harder than I thought. I was able to find a solution to loading the data from a forum on Stackoverflow.
+```{r}
+files<- list.files(path = "C:\\Users\\tyler\\Downloads\\DATA 605\\jpg", pattern = ".jpg", full.names = TRUE)
+df<- image_info(image_read(files))
+df$file_name <- files
+```
+
+# Step 2
+
+I wanted to plot the images to see what exactly we were working with.
+```{r}
+length <- 1:17
+load_images <- for (i in length){
+  image<- load.image(df$file_name[i])
+  plot(image)
+}
+```
+
+# Step 3
+
+This is where the assignment became very difficult. I wanted to turn each image into a matrix. Then I would combine the matrices into one giant matrix which I would then try to find the eigenvectors and eigenvalues for using the eigen() function. Unfortunately, I was unable to succeed in my goal. 
+
+```{r}
+shoes <- as.data.frame(image)
+```
+This caused an error because the matrix didn't look appropriate to the data. It only gave back 4 columns. Three of these columns were full of only ones. So I tried a different approach.
+
+```{r}
+shoe_image_one <- load.image((df$file_name[1]))
+shoe_one <- matrix(shoe_image_one)
+shoe_image_two <- load.image((df$file_name[2]))
+shoe_two<- matrix(shoe_image_two)
+shoe_image_three <- load.image((df$file_name[3]))
+shoe_three<- matrix(shoe_image_three)
+shoe_image_four <- load.image((df$file_name[4]))
+shoe_four<- matrix(shoe_image_four)
+shoe_image_five <- load.image((df$file_name[5]))
+shoe_five<- matrix(shoe_image_five)
+shoe_image_six<- load.image((df$file_name[6]))
+shoe_six<- matrix(shoe_image_six)
+shoe_image_seven <- load.image((df$file_name[7]))
+shoe_seven<- matrix(shoe_image_seven)
+shoe_image_eight <- load.image((df$file_name[8]))
+shoe_eight<- matrix(shoe_image_eight)
+shoe_image_nine <- load.image((df$file_name[9]))
+shoe_nine<- matrix(shoe_image_nine)
+shoe_image_ten <- load.image((df$file_name[10]))
+shoe_ten<- matrix(shoe_image_ten)
+shoe_image_eleven <- load.image((df$file_name[11]))
+shoe_eleven<- matrix(shoe_image_eleven)
+shoe_image_twelve <- load.image((df$file_name[12]))
+shoe_twelve<- matrix(shoe_image_twelve)
+shoe_image_thirteen <- load.image((df$file_name[13]))
+shoe_thirteen<- matrix(shoe_image_thirteen)
+shoe_image_fourteen <- load.image((df$file_name[14]))
+shoe_fourteen<- matrix(shoe_image_fourteen)
+shoe_image_fifteen <- load.image((df$file_name[15]))
+shoe_fifteen<- matrix(shoe_image_fifteen)
+shoe_image_sixteen <- load.image((df$file_name[16]))
+shoe_sixteen<- matrix(shoe_image_sixteen)
+shoe_image_seventeen <- load.image((df$file_name[17]))
+shoe_seventeen<- matrix(shoe_image_seventeen)
+
+shoes<- cbind(shoe_one, shoe_two, shoe_three, shoe_four, shoe_five, shoe_six, shoe_seven, shoe_eight, shoe_nine, shoe_ten, shoe_eleven, shoe_twelve, shoe_thirteen, shoe_fourteen, shoe_fifteen, shoe_sixteen, shoe_seventeen)
+```
+This time I got 17 columns like I had wanted. However, It appears that most of the values were just a 1 again. 
+
+```{r}
+# eigen(shoes) will be an error because shoes is non-square.
+#Therefore, I will instead times shoes by its transpose to give me a square matrix.
+
+#square_shoes <- shoes %*% t(shoes)
+```
+This became such a big matrix that it wasn't able to compute.
+
+# Next steps
+
+If my data was loaded and managed properly I was expecting to get 17 columns were the values were slightly different from each other. Then I would have found the eigenvalues and the eigenvectors. I also would have found the mean and covariance. After that I am still unsure of what I would do. 
+
+# Final Thoughts
+
+This assignment was very hard. This is the first time that I have felt out right lost. I feel comfortable with linear algebra. I need to work on statistics and probability more. But understanding how to combine and apply them to problems is very new. I would love to see an example of what I was supposed to do.
